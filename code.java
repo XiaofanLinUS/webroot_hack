@@ -16,7 +16,7 @@ class Player {
         int playerCount = in.nextInt(); // the number of at the start of this game
         int myId = in.nextInt(); // your bot's id
         int myX = 0, myY = 0;
-        int[][] grid = new int[COL + 1][ROW + 1];
+        int[][] grid = new int[ROW][COL];
         int L=1, R=2, U=3, D=4;
         int dirct = D;       
         int dx, dy;
@@ -36,8 +36,8 @@ class Player {
                     myX = x;
                     myY = y;
                 }
-                
-                grid[x][y] = 1;
+                   
+                grid[y][x] = 1;
             }
             int removalCount = in.nextInt(); // the amount walls removed this turn by helper bots
             for (int i = 0; i < removalCount; i++) {
@@ -49,25 +49,25 @@ class Player {
             
             //Calculate the distances between our head to other obstacles
               //Column scans
-              for(int j = 1; j <= COL; j++) {
-                  int i = myX; 
-                    if(grid[i][j] == 1 && j < myY) {
+              for(int j = 0; j < COL; j++) {
+                  int i = myY; 
+                    if(grid[i][j] == 1 && j < myX) {
                         nearLeft = j;
                     }
                     
-                    if(grid[i][j] == 1 && j > myY) {
+                    if(grid[i][j] == 1 && j > myX) {
                         nearRight = j;
                         break;
                     }
               }
             //Row scans
-              for(int i = 1; i < ROW - 1; i++) {
-                  int j = myY; 
-                    if(grid[i][j] == 1 && i < myX) {
+              for(int i = 0; i < ROW; i++) {
+                  int j = myX; 
+                    if(grid[i][j] == 1 && i < myY) {
                         nearUp = i;
                     }
                     
-                    if(grid[i][j] == 1 && j > myY) {
+                    if(grid[i][j] == 1 && i > myY) {
                         nearBot = i;
                         break;
                     }
@@ -80,11 +80,16 @@ class Player {
 
 
             // DOWN | LEFT | RIGHT | UP or DEPLOY (to clear walls)
+              System.err.println("Debug messages: NL: " + nearLeft);
+              System.err.println("Debug messages: NB: " + nearBot);
+              System.err.println("Debug messages: NU: " + nearUp);
+              System.err.println("Debug messages: NR: " + nearRight);
+              
             if(firstTime) {
                 System.out.println("DOWN");
             }else {
                 
-                System.err.println(nearLeft);
+        
                 System.out.println("DOWN");
                 
             }
